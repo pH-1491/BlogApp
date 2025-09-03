@@ -2,7 +2,7 @@ import './App.css'
 import {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import authService from "./appwrite/auth.ts";
-import {login, logout} from "./store/authSlice.ts";
+import { logout, loginUser } from './store/authSlice';
 import Header from "./components/header/Header.tsx";
 import Footer from "./components/footer/Footer.tsx";
 // import {Outlet} from "react-router-dom";
@@ -16,7 +16,8 @@ function App() {
         authService.getCurrentUser()
             .then((userData) => {
                 if (userData){
-                    dispatch(login({userData}))
+                    // Use the new async action
+                    dispatch(loginUser({ email: 'user@example.com', password: 'password' }));
                 }else{
                     dispatch(logout());
                 }
