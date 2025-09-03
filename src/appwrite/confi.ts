@@ -100,7 +100,7 @@ export class Service {
     }
 
     // ---- File upload service ----
-    async uploadFile(file: File) {
+    async uploadFile(file: File):Promise<{ $id: string }> {
         return await this.bucket.createFile(
             config.appwriteBucketId,
             ID.unique(),
@@ -113,7 +113,7 @@ export class Service {
         return true;
     }
 
-    getFilePreview(fileId: string) {
+    getFilePreview(fileId: string):string  {
         return this.bucket.getFilePreview(config.appwriteBucketId, fileId);
     }
 }
