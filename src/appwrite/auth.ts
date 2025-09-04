@@ -1,14 +1,15 @@
-import config from '../conf/config.ts'
-import { Client, Account, ID } from "appwrite";
+import config from "../conf/config.ts";
+import { Client, Account, ID, Models } from "appwrite";
 
 export class AuthService {
-    client = new Client();
-    account: Account;
+    private client = new Client();
+    private account: Account;
 
     constructor() {
         this.client
             .setEndpoint(config.appwriteUrl)
             .setProject(config.appwriteProjectId);
+
         this.account = new Account(this.client);
     }
 
@@ -19,8 +20,8 @@ export class AuthService {
                         }: {
         email: string;
         password: string;
-        name?: string; // name is optional
-    }) {
+        name?: string;
+    }): Promise<Models.Session | Models.User<Models.Preferences>> {
         try {
             const userAccount = await this.account.create(
                 ID.unique(),
@@ -28,8 +29,8 @@ export class AuthService {
                 password,
                 name
             );
+
             if (userAccount) {
-                // call another method if needed
                 return this.login({ email, password });
             } else {
                 return userAccount;
@@ -41,32 +42,31 @@ export class AuthService {
 
     async login({
                     email,
-                    password
-    }:{
+                    password,
+                }: {
         email: string;
         password: string;
-    }) {
-        try{
+    }): Promise<Models.Session> {
+        try {
             return await this.account.createEmailPasswordSession(email, password);
-
-        }catch(err){
+        } catch (err) {
             throw err;
         }
     }
 
-    async getCurrentUser(){
-        try{
-            return await this.account.get;
-        }catch(err){
-            throw err;
+    async getCurrentUser(): Promise<Models.User<Models.Preferences> | null> {
+        try {
+            return await this.account.get();
+        } catch (err) {
+            console.error("getCurrentUser error:", err);
+            return null;
         }
-        return null;
     }
 
-    async logout(){
-        try{
+    async logout(): Promise<void> {
+        try {
             await this.account.deleteSessions();
-        }catch(err){
+        } catch (err) {
             throw err;
         }
     }

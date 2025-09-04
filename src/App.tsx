@@ -16,7 +16,6 @@ function App() {
         authService.getCurrentUser()
             .then((userData) => {
                 if (userData){
-                    // Use the new async action
                     dispatch(loginUser({ email: 'user@example.com', password: 'password' }));
                 }else{
                     dispatch(logout());

@@ -33,7 +33,7 @@ export class Service {
         return await this.databases.createDocument(
             config.appwriteDatabaseId,
             config.appwriteCollectionId,
-            slug, // slug used as document ID
+            slug,
             {
                 title,
                 content,
@@ -69,7 +69,7 @@ export class Service {
                 content,
                 featuredImage,
                 status,
-                userId, // included for consistency
+                userId,
             }
         );
     }

@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import appwriteService from "../appwrite/confi.ts";
+import type { Models } from "appwrite";
 
-interface PostCardProps {
-    $id: string;
+interface PostCardProps extends Models.Document {
     title: string;
     featuredImage: string;
 }
@@ -11,7 +11,7 @@ const PostCard: React.FC<PostCardProps> = ({ $id, title, featuredImage }) => {
     return (
         <Link to={`/post/${$id}`}>
             <div className="w-full bg-gray-100 rounded-xl p-4">
-                <div className="w-full justify-center mb-4">
+                <div className="w-full flex justify-center mb-4">
                     <img
                         src={appwriteService.getFilePreview(featuredImage)}
                         alt={title}
