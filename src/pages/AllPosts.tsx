@@ -1,10 +1,10 @@
-// AllPosts.tsx
+
 import { useEffect, useState } from "react";
 import service from "../appwrite/confi.ts";
 import { Container } from "../components";
 import PostCard from "../components/PostCard";
 
-export interface Post {   // ✅ define Post here
+export interface Post {
     $id: string;
     title: string;
     featuredImage: string;
